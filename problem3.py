@@ -16,5 +16,5 @@ def prime_factors(x):
         factors.append(x)
     return factors
 
-N = 600851475143
+N = 13
 print prime_factors(N)
