@@ -5,6 +5,13 @@ What is the largest prime factor of the number 600851475143 ?
 '''
 
 
+def is_prime(n):
+    if len(prime_factors(n)) == 1:
+        return True
+    else:
+        return False
+
+
 def prime_factors(x):
     '''
     give prime factors of x
