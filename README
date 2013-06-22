@@ -1,3 +1,5 @@
 Project Euler
 
 http://projecteuler.net/
+
+Note: problem3.py gives a prime_factors() method to find prime factors efficiently
