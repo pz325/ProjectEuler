@@ -1,17 +1,27 @@
-'''
-Let d(n) be defined as the sum of proper divisors of n (numbers less than n which divide evenly into n).
-If d(a) = b and d(b) = a, where a  b, then a and b are an amicable pair and each of a and b are called amicable numbers.
+def is_prime(n):
+    if len(prime_factors(n)) == 1:
+        return True
+    else:
+        return False
 
-For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 and 110; therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and 142; so d(284) = 220.
 
-Evaluate the sum of all the amicable numbers under 10000.
-'''
-from problem3 import prime_factors
-
-'''
-divisor generator idea copied from
-http://stackoverflow.com/questions/171765/what-is-the-best-way-to-get-all-the-divisors-of-a-number
-'''
+def prime_factors(x):
+    '''
+    give prime factors of x
+    '''
+    factors = []
+    while x % 2 == 0:
+        factors.append(2)
+        x /= 2
+    i = 3
+    while i * i <= x:
+        while x % i == 0:
+            x /= i
+            factors.append(i)
+        i += 2
+    if x > 1:
+        factors.append(x)
+    return factors
 
 
 def appendEs2Sequences(sequences, es):
@@ -56,22 +66,3 @@ def divisors(n):
         divisors.append(reduce(lambda x, y: x*y, f, 1))
     divisors.sort()
     return divisors
-
-
-def amicables(d):
-    a = []
-    for i in range(1, len(d)-1):
-        if d[i] < len(d) and d[i] != i:
-            if d[d[i]] == i:
-                a.append(i)
-    return a
-
-
-N = 10000
-d = map(lambda x: sum(divisors(x))-x, range(0, N))
-a = amicables(d)
-o = map(lambda x: '{0}: {1}'.format(x, d[x]), a)
-# print a
-# print o
-print '==result=='
-print sum(a)
