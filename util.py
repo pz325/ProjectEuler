@@ -9,6 +9,10 @@ def prime_factors(x):
     '''
     give prime factors of x
     '''
+    if x <= 0:
+        return [0]
+    if x == 1:
+        return [1]
     factors = []
     while x % 2 == 0:
         factors.append(2)
@@ -58,6 +62,8 @@ def factorGenerator(n):
 def divisors(n):
     if n == 0:
         return [0]
+    if n == 1:
+        return [1]
     factors = factorGenerator(n)
     divisors = []
     listexponents = [map(lambda x:k**x, range(0, factors[k]+1)) for k in factors.keys()]
@@ -66,3 +72,13 @@ def divisors(n):
         divisors.append(reduce(lambda x, y: x*y, f, 1))
     divisors.sort()
     return divisors
+
+
+def digits(n):
+    num = 0
+    d = []
+    while n > 0:
+        d.append(n % 10)
+        num += 1
+        n /= 10
+    return num, d[::-1]
