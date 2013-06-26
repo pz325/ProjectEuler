@@ -1,3 +1,13 @@
+def primes_less_than(n):
+    if n == 2:
+        return [2]
+    p = [2]
+    for i in xrange(3, n+1, 2):
+        if is_prime(i):
+            p.append(i)
+    return p
+
+
 def is_prime(n):
     if len(prime_factors(n)) == 1:
         return True
