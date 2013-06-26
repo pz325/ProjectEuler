@@ -10,9 +10,9 @@ def prime_factors(x):
     give prime factors of x
     '''
     if x <= 0:
-        return [0]
+        return []
     if x == 1:
-        return [1]
+        return []
     factors = []
     while x % 2 == 0:
         factors.append(2)
