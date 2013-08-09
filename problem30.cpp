@@ -23,7 +23,7 @@ int main()
 	{
 		std::vector<unsigned> digits = GetDigits(i);
 		long long sum = 0;
-		for (std::vector<unsigned>::iterator it = digits.begin(); it != digits.end(); ++it)
+		for (auto it = digits.begin(); it != digits.end(); ++it)
 		{
 			sum += pow(*it, 5);
 		}

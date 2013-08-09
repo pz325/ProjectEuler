@@ -11,7 +11,7 @@ total = 2
 while True:
     pfs = prime_factors(i)
     if len(pfs) == 1:
-        print i
+        # print i
         total += i
     i += 2
     if i > target:

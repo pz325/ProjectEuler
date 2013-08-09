@@ -98,3 +98,30 @@ std::vector<unsigned> GetDigits(long long x)
 	std::reverse(digits.begin(), digits.end());
 	return digits;
 }
+
+std::vector<unsigned> GetBinary(long long x)
+{
+	std::vector<unsigned> binary;
+	while(x > 0)
+	{
+		binary.push_back(x % 2);
+		x /= 2;
+	}
+	std::reverse(binary.begin(), binary.end());
+	return binary;
+}
+
+template<class T>
+bool IsPalindromic(std::vector<T> x)
+{
+	unsigned length = x.size();
+	unsigned halfLength = x.size() / 2;
+	for (unsigned i = 0; i < halfLength; ++i)
+	{
+		if (x[i] != x[length-i-1])
+		{
+			return false;
+		}
+	}
+	return true;
+}
