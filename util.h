@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <algorithm>
-#include <tuple>
 
 std::vector<long long> GetPrimeFactors(long long x)
 {
@@ -83,19 +82,16 @@ std::vector<long long> GetPrimesLessThan(long long x)
 /// \param base
 /// \return digits vector and number of digits tuple.
 ///
-std::tuple<std::vector<unsigned>, unsigned> GetDigits(long long x, unsigned base=10)
+std::vector<unsigned> GetDigits(long long x, unsigned base=10)
 {
 	std::vector<unsigned> digits;
-	unsigned num = 0;
 	while(x > 0)
 	{
-		num += 1;
 		digits.push_back(x % base);
 		x /= base;
 	}
 	std::reverse(digits.begin(), digits.end());
-	std::tuple<std::vector<unsigned>, unsigned> ret = std::make_tuple(digits, num);
-	return ret;
+	return digits;
 }
 
 template<class T>

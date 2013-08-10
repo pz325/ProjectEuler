@@ -14,7 +14,6 @@ Find the sum of all the numbers that can be written as the sum of fifth powers o
 #include "util.h"
 #include <iostream>
 #include <cmath>
-#include <tuple>
 
 int main()
 {
@@ -22,7 +21,7 @@ int main()
 	long long result = 0;
 	for (long long i = 2; i < N; ++i)
 	{
-		std::vector<unsigned> digits = std::get<0>(GetDigits(i));
+		std::vector<unsigned> digits = GetDigits(i);
 		long long sum = 0;
 		for (auto it = digits.begin(); it != digits.end(); ++it)
 		{

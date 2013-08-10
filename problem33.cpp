@@ -10,7 +10,6 @@ If the product of these four fractions is given in its lowest common terms, find
 
 #include "util.h"
 #include <iostream>
-#include <tuple>
 
 int main()
 {
@@ -20,9 +19,9 @@ int main()
 	{
 		for (unsigned b = a+1; b <= 99; ++b)
 		{
-			std::vector<unsigned> digits_a = std::get<0>(GetDigits(a));
+			std::vector<unsigned> digits_a = GetDigits(a);
 			std::sort(digits_a.begin(), digits_a.end());
-			std::vector<unsigned> digits_b = std::get<0>(GetDigits(b));
+			std::vector<unsigned> digits_b = GetDigits(b);
 			std::sort(digits_b.begin(), digits_b.end());
 			if (digits_a[0] == digits_b[0])
 			{

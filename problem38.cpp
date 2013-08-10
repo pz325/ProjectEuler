@@ -23,6 +23,7 @@ int main(int argc, char const *argv[])
 	for(unsigned i = 1; i <= N; ++i)
 	{
 		std::set<unsigned> pandigital;
+		std::vector<unsigned> result;
 		unsigned num = 0;
 		unsigned tmp;
 		unsigned j = 1;
@@ -30,24 +31,31 @@ int main(int argc, char const *argv[])
 		{	
 			tmp = i * j;
 			std::vector<unsigned> digits = GetDigits(tmp);
-			if(std::find(digits.begin(), digits.end(), 0) != digits.end()) {
-				for(auto it = digits.begin(); it != digits.end(); ++it)
-				{
-					pandigital.insert(*it);
-				}
-				num += digits.size();
-				if (num >= 9) break;
-				++j;
-			}
-			else
+			result.insert(result.end(), digits.begin(), digits.end());
+			// ignore 0
+			if (std::find(digits.begin(), digits.end(), 0) != digits.end())
 			{
 				break;
 			}
-		}
-		if (pandigital.size() == 9 && std::find(pandigital.begin(), pandigital.end(), 0) != pandigital.end())
-		{
-			std::for_each(pandigital.begin(), pandigital.end(), [](unsigned d){ std::cout << d; });
-			std::cout << std::endl;
+			for(auto it = digits.begin(); it != digits.end(); ++it)
+			{
+				pandigital.insert(*it);
+			}
+			// check number of concatenated digits
+			num += digits.size();
+			if (num > 9)
+			{
+				break;
+			}
+			if (num == 9)
+			{
+				if (pandigital.size() == 9)
+				{
+					std::for_each(result.begin(), result.end(), [](unsigned d){ std::cout << d; });
+					std::cout << std::endl;
+				}
+			}
+			++j;
 		}
 	}
 	return 0;
