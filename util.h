@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <tuple>
 
 std::vector<long long> GetPrimeFactors(long long x)
 {
@@ -76,39 +77,25 @@ std::vector<long long> GetPrimesLessThan(long long x)
 	return primes;
 }
 
-unsigned GetNumDigits(long long x)
+///
+/// Can also be used for conversion of from decimal to the other number system
+///
+/// \param base
+/// \return digits vector and number of digits tuple.
+///
+std::tuple<std::vector<unsigned>, unsigned> GetDigits(long long x, unsigned base=10)
 {
+	std::vector<unsigned> digits;
 	unsigned num = 0;
 	while(x > 0)
 	{
 		num += 1;
-		x /= 10;
-	}
-	return num;
-}
-
-std::vector<unsigned> GetDigits(long long x)
-{
-	std::vector<unsigned> digits;
-	while(x > 0)
-	{
-		digits.push_back(x % 10);
-		x /= 10;
+		digits.push_back(x % base);
+		x /= base;
 	}
 	std::reverse(digits.begin(), digits.end());
-	return digits;
-}
-
-std::vector<unsigned> GetBinary(long long x)
-{
-	std::vector<unsigned> binary;
-	while(x > 0)
-	{
-		binary.push_back(x % 2);
-		x /= 2;
-	}
-	std::reverse(binary.begin(), binary.end());
-	return binary;
+	std::tuple<std::vector<unsigned>, unsigned> ret = std::make_tuple(digits, num);
+	return ret;
 }
 
 template<class T>

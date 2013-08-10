@@ -9,7 +9,7 @@ Find the sum of all numbers, less than one million, which are palindromic in bas
 #include "util.h"
 #include <iostream>
 #include <vector>
-
+#include <tuple>
 
 int main(int argc, char const *argv[])
 {
@@ -17,8 +17,8 @@ int main(int argc, char const *argv[])
 	unsigned sum = 0;
 	for (unsigned i = 1; i < N; ++i)
 	{
-		std::vector<unsigned> digits_10 = GetDigits(i);
-		std::vector<unsigned> digits_2 = GetBinary(i);
+		std::vector<unsigned> digits_10 = std::get<0>(GetDigits(i));
+		std::vector<unsigned> digits_2 = std::get<0>(GetDigits(i, 2));
 		if (IsPalindromic<unsigned>(digits_10) && IsPalindromic<unsigned>(digits_2))
 		{
 			std::cout << i << std::endl;
