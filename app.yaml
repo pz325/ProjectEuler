@@ -1,0 +1,23 @@
+application: menrfa-project-euler
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /favicon.ico
+  static_files: app/static/img/favicon.ico
+  upload: application/static/img/favicon.ico
+- url: /static
+  static_dir: app/static
+- url: .*
+  script: main.app
+
+skip_files:
+- ^(.*/)?.*\.py[co]
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
