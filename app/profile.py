@@ -23,7 +23,7 @@ class Profiler(object):
     def get_stats(self):
         stat_stream = cStringIO.StringIO()
         self.profiler.create_stats()
-        self.profiler.print_stats()  # sort by 
+        self.profiler.print_stats()
         pstats.Stats(self.profiler, stream=stat_stream).strip_dirs().sort_stats('calls').print_stats()
         profile_stats = stat_stream.getvalue()
         stat_stream.close()

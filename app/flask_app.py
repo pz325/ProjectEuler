@@ -3,8 +3,10 @@ This is a self-contained flask application
 '''
 from flask import Flask
 from flask import request
+from flask import render_template
 import settings
 from profile import Profiler
+
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -20,16 +22,23 @@ def index():
 def solution(problem_id):
     try:
         do_profile = request.args.get('profile', '')
-
         module = __import__('solutions.problem{0}'.format(problem_id), fromlist=['solution'])
         if do_profile == 'true':
             p = Profiler(module.solution)
             result = p()
-            profile_stats = '<pre>{0}</pre>'.format(p.get_stats())
-            return '<h3>Result: {0} </h3>{1}'.format(result, profile_stats)
+            profile_stats = p.get_stats()
+            # return '<h3>Result: {0} </h3>{1}'.format(result, profile_stats)
         else:
             result = module.solution()
-            return '<h3>Result: {0} </h3>'.format(result)
+            profile_stats = ''
+            # return '<h3>Result: {0} </h3>'.format(result)
+        problem_content = module.__doc__
+        return render_template("solution.html",
+            problem_id = problem_id,
+            problem_content = problem_content,
+            result = result,
+            profile_stats = profile_stats)
+
     except ImportError:
         return 'Not solved'
     except KeyError:
