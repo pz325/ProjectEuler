@@ -1,10 +1,9 @@
 '''
-not thread safe
 profilee accepts no parameter
 '''
 import cStringIO
 import cProfile
-import sys
+import pstats
 
 class Profiler(object):
     '''
@@ -12,7 +11,7 @@ class Profiler(object):
 
     p = Profiler(a_method)
     result = p()
-    stats = p.get_stats
+    stats = p.get_stats()
     '''
     def __init__(self, profilee):
         self.profiler = cProfile.Profile()
@@ -22,12 +21,10 @@ class Profiler(object):
         return self.profiler.runcall(self.profilee)
     
     def get_stats(self):
-        stream = cStringIO.StringIO()
+        stat_stream = cStringIO.StringIO()
         self.profiler.create_stats()
-        old_stdout, sys.stdout = sys.stdout, stream
-        self.profiler.print_stats(1)
-        sys.stdout = old_stdout
-        profile_stats = stream.getvalue()
-        stream.close()
+        self.profiler.print_stats()  # sort by 
+        pstats.Stats(self.profiler, stream=stat_stream).strip_dirs().sort_stats('calls').print_stats()
+        profile_stats = stat_stream.getvalue()
+        stat_stream.close()
         return profile_stats
-
