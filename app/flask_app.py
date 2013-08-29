@@ -9,7 +9,6 @@ from flask import request
 from flask import render_template
 import settings
 from werkzeug.contrib.cache import SimpleCache
-import traceback
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -19,7 +18,6 @@ module_manager = ModuleManager()
 @app.route('/')
 def index():
     return 'hello'
-
 
 # HTTP GET /solution/2?profile=true
 @app.route('/solution/<int:problem_id>')
@@ -76,5 +74,9 @@ def solution(problem_id):
     except KeyError:
         return 'Bad request'  # TODO change to 400
 
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('error.html'), 404
+    
 if __name__ == '__main__':
     app.run()
