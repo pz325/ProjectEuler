@@ -9,6 +9,7 @@ from flask import request
 from flask import render_template
 import settings
 from werkzeug.contrib.cache import SimpleCache
+import traceback
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -72,11 +73,18 @@ def solution(problem_id):
             profile_stats=profile_stats)
 
     except KeyError:
-        return 'Bad request'  # TODO change to 400
+        return render_template('error.html'), 404
 
 @app.errorhandler(404)
 def not_found(error):
-    return render_template('error.html'), 404
-    
+    return render_template('404.html'), 404
+
+# Handle 500 errors
+@app.errorhandler(500)
+def server_error(e):
+    error_traceback = ''
+    error_traceback = traceback.format_exc(e)
+    return render_template('500.html', error_traceback=error_traceback), 500
+
 if __name__ == '__main__':
     app.run()
