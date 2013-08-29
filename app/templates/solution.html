@@ -4,12 +4,25 @@
   </head>
   <body>
     <h2>Problem: {{problem_id}}</h2>
-    <p>{{problem_content}}</p>
+    {% if problem_content %}
+      <p>{{problem_content}}</p>
+    {% endif %}
+    
     <h2>Result</h2>
-    <pre>{{result}}</pre>
+    {% if result %}
+      <pre>{{result}}</pre>
+    {% else %}
+      <p>Not solved</p>
+    {% endif %}
+    
     {% if profile_stats %}
-    <h2>Profile Statistics</h2>
-    <pre>{{profile_stats}}</pre>
+      <h2>Profile Statistics</h2>
+      <pre>{{profile_stats}}</pre>
+    {% endif %}
+    
+    {% if error_traceback %}
+    <h2>Error</h2>
+    <pre>{{error_traceback}}</pre>
     {% endif %}
   </body>
 </html>

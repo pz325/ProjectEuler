@@ -9,6 +9,7 @@ from flask import request
 from flask import render_template
 import settings
 from werkzeug.contrib.cache import SimpleCache
+import traceback
 
 app = Flask(__name__)
 app.config.from_object(settings)
@@ -30,12 +31,18 @@ def solution(problem_id):
     3) no cached result and/or profile_stats (if requesting profile_stats)
     '''
     try:
-        do_profile = request.args.get('profile', '')
-
         # load solution module, using ModuleManager
         module_name = 'solutions.problem{0}'.format(problem_id)
         do_calculation = module_manager.add_module(module_name)
         module = module_manager.get_module(module_name)
+    except ImportError:
+        return render_template('solution.html',
+            problem_id=problem_id) 
+
+    problem_content = module.__doc__
+
+    try:
+        do_profile = request.args.get('profile', '')
 
         # check cache
         result_key = 'problem_{0}_result'.format(problem_id)
@@ -59,22 +66,15 @@ def solution(problem_id):
             cache.set(result_key, result)
             cache.set(profile_stats_key, profile_stats)
 
-        problem_content = module.__doc__
-
         # render template
         return render_template("solution.html",
-            problem_id = problem_id,
-            problem_content = problem_content,
-            result = result,
-            profile_stats = profile_stats)
+            problem_id=problem_id,
+            problem_content=problem_content,
+            result=result,
+            profile_stats=profile_stats)
 
-    except ImportError:
-        return 'Not solved'
-    # except KeyError:
-    #     return 'Bad request'
-    # except Exception:
-    #     return 'Unknown error'
-
+    except KeyError:
+        return 'Bad request'  # TODO change to 400
 
 if __name__ == '__main__':
     app.run()
