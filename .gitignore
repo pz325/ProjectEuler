@@ -15,6 +15,9 @@ local.properties
 .classpath
 .settings/
 .loadpath
+err.txt
+test.*
+t.*
 
 # External tool builders
 .externalToolBuilders/
