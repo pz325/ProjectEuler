@@ -60,7 +60,7 @@ def solution(problem_id):
                 profile_stats = p.get_stats()
             else:
                 result = module.solution()
-                profile_stats = ''
+                profile_stats = None
             # update cache
             cache.set(result_key, result)
             cache.set(profile_stats_key, profile_stats)
@@ -82,7 +82,6 @@ def not_found(error):
 # Handle 500 errors
 @app.errorhandler(500)
 def server_error(e):
-    error_traceback = ''
     error_traceback = traceback.format_exc(e)
     return render_template('500.html', error_traceback=error_traceback), 500
 
