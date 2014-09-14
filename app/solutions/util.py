@@ -1,3 +1,5 @@
+import math
+
 def primes_less_than(n):
     if n == 2:
         return [2]
@@ -7,6 +9,27 @@ def primes_less_than(n):
             p.append(i)
     return p
 
+def n_digit_prime(n=2):
+    start = int(math.pow(10, n-1))
+    end = int(math.pow(10, n) - 1)
+    for i in prime_start(start):
+        if i > end: break
+        yield i
+
+
+def prime_start(start=2):
+    if start == 2:
+        yield start
+        n = 3
+    else:
+        if start % 2 == 0:
+            n = start + 1
+        else:
+            n = start
+    while True:
+        if is_prime(n):
+            yield n
+        n += 2
 
 def is_prime(n):
     if n <= 1:
