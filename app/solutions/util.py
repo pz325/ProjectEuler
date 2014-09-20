@@ -131,3 +131,6 @@ def digits(n):
         num += 1
         n /= 10
     return num, d[::-1]
+
+def digits_2(n):
+    return len(str(n))
