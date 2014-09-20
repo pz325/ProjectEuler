@@ -1,5 +1,13 @@
 import math
 
+def reverse(n):
+    return int(str(n)[::-1])
+
+
+def isPalindromic(n):
+    return str(n) == str(n)[::-1]
+
+
 def primes_less_than(n):
     if n == 2:
         return [2]
