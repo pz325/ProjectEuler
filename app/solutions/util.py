@@ -1,4 +1,5 @@
 import math
+import operator
 
 def reverse(n):
     return int(str(n)[::-1])
@@ -134,3 +135,16 @@ def digits(n):
 
 def digits_2(n):
     return len(str(n))
+
+def combination(n, r):
+    if r > n/2:
+        return combination(n, n-r)
+    maxNumerator = n-r
+    minDenominator = r+1
+
+    numerator = xrange(maxNumerator+1, n+1)
+    denominator = xrange(1, minDenominator) 
+
+    # print(numerator)
+    # print(numerator)
+    return reduce(operator.mul, numerator, 1) / reduce(operator.mul, denominator, 1)

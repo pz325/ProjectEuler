@@ -1,23 +1,10 @@
 '''
 Combinatoric selections
+
+answer: 4075
 '''
 
-import math
-import operator
-
-
-def combination(n, r):
-    if r > n/2:
-        return combination(n, n-r)
-    maxNumerator = n-r
-    minDenominator = r+1
-
-    numerator = xrange(maxNumerator+1, n+1)
-    denominator = xrange(1, minDenominator) 
-
-    # print(numerator)
-    # print(numerator)
-    return reduce(operator.mul, numerator, 1) / reduce(operator.mul, denominator, 1)
+from util import combination
 
 
 def solution():
