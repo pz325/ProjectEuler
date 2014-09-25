@@ -4,7 +4,6 @@ Combinatoric selections
 
 import math
 import operator
-reduce(operator.mul, [1,2,3,4,5,6], 1)
 
 def combination(n, r):
     if r > n/2:
