@@ -5,18 +5,19 @@ Combinatoric selections
 import math
 import operator
 
+
 def combination(n, r):
     if r > n/2:
         return combination(n, n-r)
-    maxDenominator = n-r
-    minNumerator = r+1
+    maxNumerator = n-r
+    minDenominator = r+1
 
-    denominator = xrange(maxDenominator+1, n+1)
-    numerator = xrange(1, minNumerator) 
+    numerator = xrange(maxNumerator+1, n+1)
+    denominator = xrange(1, minDenominator) 
 
-    # print(denominator)
     # print(numerator)
-    return reduce(operator.mul, denominator, 1) / reduce(operator.mul, numerator, 1)
+    # print(numerator)
+    return reduce(operator.mul, numerator, 1) / reduce(operator.mul, denominator, 1)
 
 
 def solution():
