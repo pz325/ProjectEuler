@@ -14,19 +14,10 @@ answer: 510510
 import time
 from util import prime_factors
 
-factors = {}
-
-def genFactors(N):
-    startTime = time.time()
-    global factors
-    for i in range(2, N+1):
-        factors[i] = prime_factors(i)
-    print('generating factors takes {} seconds'.format(time.time() - startTime))
-
 
 def phi(n):
     r = 1.0
-    for p in factors[n]:
+    for p in prime_factors(n):
         r *= (1.0 - 1.0/float(p))
     r *= n
     return r
@@ -34,7 +25,6 @@ def phi(n):
 
 def solution():
     N = 1000000
-    genFactors(N)
 
     maxResult = 0
     index = 0
