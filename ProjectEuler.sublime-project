@@ -5,5 +5,15 @@
 			"follow_symlinks": true,
 			"path": "."
 		}
-	]
+	],
+
+	"SublimeLinter":
+	{
+		"@python": 2.7
+	},
+	"settings":
+	{
+		"tab_size": 4,
+		"translate_tabs_to_spaces": true
+	}
 }
