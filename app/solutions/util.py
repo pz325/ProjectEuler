@@ -148,3 +148,10 @@ def combination(n, r):
     # print(numerator)
     # print(numerator)
     return reduce(operator.mul, numerator, 1) / reduce(operator.mul, denominator, 1)
+
+
+def gcd(m, n):
+    """Return the greatest common divisor of m and n."""
+    while n != 0:
+        m, n = n, m % n
+    return m
