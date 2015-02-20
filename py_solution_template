@@ -1,0 +1,11 @@
+'''
+Prime pair sets
+'''
+
+def solution():
+    result = 0
+    return result
+
+if __name__ == '__main__':
+    result = solution()
+    print 'Result: ', result

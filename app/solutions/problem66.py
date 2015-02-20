@@ -93,6 +93,7 @@ def isSquare(n):
     sqrtn = math.sqrt(n)
     return int(sqrtn) == sqrtn
 
+
 def solution():
     MAX_D = 1000
     possible_Dyx_Endings, possible_Dy_Endings = genPossibleEndings()
@@ -105,9 +106,12 @@ def solution():
         while True:
             oneDyy = 1 + D * y * y
             x = int(math.sqrt(oneDyy))-1
-            while (D%10, y%10, x%10) not in possible_Dyx_Endings or x*x < oneDyy:
+            while (D%10, y%10, x%10) not in possible_Dyx_Endings:
                 x += 1
-                print(D, y, x, x*x, oneDyy, x*x-oneDyy)
+                # print(D, y, x, x*x, oneDyy, x*x-oneDyy)
+                if x*x < oneDyy:
+                    break
+                # raw_input("[x+=1] Press Enter to continue...")
             if x * x == oneDyy:
                 print(D, x)
                 if x > minx:
@@ -116,9 +120,12 @@ def solution():
             else:
                 while True:
                     y += 1
+                    # raw_input("[y+=1] Press Enter to continue...")
+                    # print(D, y, x, x*x, oneDyy, x*x-oneDyy)
                     if (D%10, y%10) in possible_Dy_Endings: break
             # if y > 5:
             #     break
+        # break
     return minx
 
 if __name__ == '__main__':
