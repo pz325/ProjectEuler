@@ -134,6 +134,9 @@ def digits(n):
     return num, d[::-1]
 
 def digits_2(n):
+    '''
+    return number of digits of n, an integer
+    '''
     return len(str(n))
 
 def combination(n, r):
