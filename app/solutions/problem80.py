@@ -10,6 +10,10 @@ Digit-by-digit calculation
 digital sum of the first one hundred decimal digits
     include 1 before the decimal point!!!
 
+http://apod.nasa.gov/htmltest/gifcity/sqrt2.1mil
+    1st 1m digits of sqrt 2
+    help to verify
+
 40886
 '''
 
