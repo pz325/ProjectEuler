@@ -27,7 +27,7 @@ def chainEnds(n):
     # return chains
     return n
 
-def bruteForceSolution():
+def bruteForceSolution():  # 163.5s
     count = 0
     for x in range(1, 10000000):
         if x % 10000 == 0: print(x)
