@@ -158,3 +158,50 @@ def gcd(m, n):
     while n != 0:
         m, n = n, m % n
     return m
+
+
+def array_add(a1, a2):
+    '''
+    addition of two arrays, for dealing with large integer addition
+    [1, 2, 3] + [4, 5] <=> 123+45
+      => [1, 6, 8]
+    @param a1 
+    @param a2 
+    @return
+    '''
+
+    def get_carrier(addition):
+        if addition > 9:
+            carrier = 1
+            addition = addition - 10
+        else:
+            carrier =0 
+        return addition, carrier
+
+
+    if len(a2) > len(a1):
+        return array_add(a2, a1)
+    
+    r1 = a1[::-1]
+    r2 = a2[::-1]
+
+    carrier = 0
+    i = 0
+    while i < len(r2):
+        addition = r1[i] + r2[i] + carrier
+        addition, carrier = get_carrier(addition)
+        r1[i] = addition
+        i += 1
+    
+    while carrier > 0:
+        if i < len(r1):
+            addition = r1[i] + carrier
+            addition, carrier = get_carrier(addition)
+            r1[i] = addition
+            i += 1
+        else:
+            r1.append(carrier)
+            carrier = 0
+        
+
+    return r1[::-1]
