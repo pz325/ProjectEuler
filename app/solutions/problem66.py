@@ -22,111 +22,121 @@ Hence, by considering minimal solutions in x for D <=7, the largest x is obtaine
 Find the value of D <= 1000 in minimal solutions of x for which the largest value of x is obtained.
 
 '''
-
-
-'''
-possible ending digits:
-
-  D    y        x
-* 0    [0-9]    [1,9]
-* 1    [2,8]    5
-* 1    [5]      [4,6]
-* 1    [0]      [1,9]
-* 2    [2,3,7,8] [3,7]
-* 2    [5,0]     [1,9]
-* 3    [1,9]    [2,8]
-* 3    [4,6]    [3,7]
-* 3    5         [4,6]
-* 3    0         [1,9]
-* 4    [1,4,6,9] 5
-* 4    [5,0]     [1,9]
-* 5    [1,3,5,7,9] [4,6]
-* 5    [0,2,3,4,8] [1,9]
-* 6    [2,3,7,8,] 5
-* 6    [5,0]     [1,9]
-* 7    [2,8]       [3,7]
-* 7    [3,7]     [2,8]
-* 7    [5]       [4,6]
-* 7    [0]       [1,9]
-* 8    [1,4,6,9]  [3,7]
-* 8    [5,0]     [1,9]
-* 9    [4,6]     5
-* 9    5         [4,6]
-* 9    0         [1,9]
-'''
-
-from itertools import product
 import math
 
-def genPossibleEndings():
-    possible_Dyx_Endings = []
-    possible_Dy_Endings = []
-    D_y_x = [
-    ([0], range(10), [1, 9]),
-    ([1], [2, 8], [5]),
-    ([1], [5], [4, 6]),
-    ([1, 3, 7, 9], [0], [1, 9]),
-    ([2, 4, 6, 8], [5, 0], [1, 9]),
-    ([2], [2,3,7,8], [3,7]),
-    ([3], [1, 9], [2,8]),
-    ([3], [4,6],[3,7]),
-    ([3], [5], [4,6]),
-    ([4], [1,4,6,9], [5]),
-    ([5], [1,3,5,7,9], [4,6]),
-    ([5], [0,2,4,6,8], [1,9]),
-    ([6], [2,3,7,8], [5]),
-    ([7], [2,8], [3,7]),
-    ([7], [3,7], [2,8]),
-    ([7], [5], [4,6]),
-    ([8], [1,4,6,9], [3,7]),
-    ([9], [4,6], [5]),
-    ([9], [5], [4,6]),
-    ]
-    for (D, y, x) in D_y_x:
-        possible_Dyx_Endings.extend(list(product(D, y, x)))
-        possible_Dy_Endings.extend(list(product(D, y)))
+
+def continued_fraction(x, max_k=100):
+    '''
+    Find continued fraction of x
+    reference https://en.wikipedia.org/wiki/Continued_fraction
+    @return (terms, convergents_numerator, convertents_denominator)
+    '''
+    eps = 10e-9
+    terms = []
+    convergents_numerator = []
+    convergents_denominator = []
+    pm2, qm2 = 1, 0
+    pm1, qm1 = 0, 1
+    real_number = x
+    k = 0
+    while True:
+        a = int(math.floor(real_number))
+        r = real_number - a
+        terms.append(a)
+        # print('real', real_number, 'integer: ', a, 'remain', r)
+        if k == 0:
+            convergents_numerator.append(a)
+            convergents_denominator.append(1)
+            # print('p', a, 'q', 1, r'p/q', float(a)/float(1))
+            pm1 = a
+            qm1 = 1
+        else:
+            p = a * pm1 + pm2
+            q = a * qm1 + qm2
+            convergents_numerator.append(p)
+            convergents_denominator.append(q)
+            # print('p', p, 'q', q, r'p/q', float(p)/float(q))
+            pm2, qm2 = pm1, qm1
+            pm1, qm1 = p, q
+
+        # print('k', k, 'r', r)
+        if k > max_k or r < eps:
+            break
+        
+        real_number = 1.0 / r
+        k += 1
+        
     
-    return possible_Dyx_Endings, possible_Dy_Endings
+    return terms, convergents_numerator, convergents_denominator
 
 
-def isSquare(n):
-    sqrtn = math.sqrt(n)
-    return int(sqrtn) == sqrtn
+def test_continued_fraction():
+    a, p, q = continued_fraction(math.pi, 100)
+    print(a)
+    print(p)
+    print(q)
 
+
+from decimal import *
+getcontext().prec = 100
+
+def solve_diophantine(D):
+    '''
+    '''
+    MAX_K = 1000
+    pm2, qm2 = 1, 0
+    pm1, qm1 = 0, 1
+    real_number = Decimal(D).sqrt()
+    k = 0
+    while True:
+        a = int(math.floor(real_number))
+        r = real_number - Decimal(a)
+        # print('real', real_number, 'integer: ', a, 'remain', r)
+        if k == 0:
+            p = a
+            q = 1
+            # print('p', a, 'q', 1, r'p/q', float(a)/float(1))
+            pm1 = a
+            qm1 = 1
+        else:
+            p = a * pm1 + pm2
+            q = a * qm1 + qm2
+            # print('p', p, 'q', q, r'p/q', float(p)/float(q))
+            pm2, qm2 = pm1, qm1
+            pm1, qm1 = p, q
+        
+        if diophantine_equation_match(p, q, D):
+            return p, q
+        # print('k', k, 'r', r)
+        if k > MAX_K:
+            break
+        
+        real_number = Decimal(1.0) / r
+        k += 1
+    
+    print('NOT FOUND -- increase MAX_K', D)
+    return 0, 0
+
+
+def diophantine_equation_match(x, y, D):
+    return x*x-D*y*y == 1
+
+def is_sqrt_root(x):
+    y = math.sqrt(x)
+    return math.floor(y) == y
 
 def solution():
-    MAX_D = 1000
-    possible_Dyx_Endings, possible_Dy_Endings = genPossibleEndings()
-    minD, minx = 2, 1
-    for D in xrange(2, MAX_D):
-        if isSquare(D): continue
-        y = 1
-        while (D%10, y%10) not in possible_Dy_Endings:
-            y += 1
-        while True:
-            oneDyy = 1 + D * y * y
-            x = int(math.sqrt(oneDyy))-1
-            while (D%10, y%10, x%10) not in possible_Dyx_Endings:
-                x += 1
-                # print(D, y, x, x*x, oneDyy, x*x-oneDyy)
-                if x*x < oneDyy:
-                    break
-                # raw_input("[x+=1] Press Enter to continue...")
-            if x * x == oneDyy:
-                print(D, x)
-                if x > minx:
-                    minx, minD = x, D
-                break
-            else:
-                while True:
-                    y += 1
-                    # raw_input("[y+=1] Press Enter to continue...")
-                    # print(D, y, x, x*x, oneDyy, x*x-oneDyy)
-                    if (D%10, y%10) in possible_Dy_Endings: break
-            # if y > 5:
-            #     break
-        # break
-    return minx
+    x_max = 0
+    D_max = 0
+    for D in range(2, 1001):
+        if is_sqrt_root(D):
+            continue
+        x, y = solve_diophantine(D)
+        if x > x_max:
+            x_max, D_max = x, D
+        # print(D, x, y)
+    
+    return D_max
 
 if __name__ == '__main__':
     result = solution()
