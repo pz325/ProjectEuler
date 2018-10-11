@@ -1,6 +1,9 @@
 '''
 Prime square remainders
 
+Follow the problem 123.py
+
+R = 2 * n * p > 10 ^ 9
 '''
 
 import util
@@ -14,6 +17,9 @@ def calculateR(p, n):
     print(n, r)
     return r
 
+def calculateR_v2(p, n):
+    return 2 * n * p
+
 def bruteForce(target):
     n = 1
     for p in util.prime_start():
@@ -22,7 +28,7 @@ def bruteForce(target):
             n += 1
             continue
 
-        r = calculateR(p, n)
+        r = calculateR_v2(p, n)
         if r > target:
             break
 
