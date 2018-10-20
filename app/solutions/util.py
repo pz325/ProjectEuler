@@ -109,6 +109,28 @@ def factorGenerator(n):
     return factors
 
 
+def proper_divisors(n):
+    '''
+    The proper divisors of a number are all the divisors excluding the number itself. For example, the proper divisors of 28 are 1, 2, 4, 7, and 14. As the sum of these divisors is equal to 28, we call it a perfect number.
+    '''
+    return divisors(n)[0:-1]
+
+
+def factors(n):
+    factors = []
+    sqrt = int(math.sqrt(n))
+    if sqrt * sqrt == n:
+        factors.append(sqrt)
+        sqrt = sqrt -1
+    
+    for i in range(1, sqrt):
+        if n % i == 0:
+            factors.append(i)
+            factors.append(n / i)
+    
+    return factors
+
+
 def divisors(n):
     if n == 0:
         return [0]
@@ -205,3 +227,16 @@ def array_add(a1, a2):
         
 
     return r1[::-1]
+
+
+def timeit(func):
+    '''
+    Decorator for timing the func
+    '''
+    def wrapper(*args, **kwargs):
+        import time
+        start_time = time.time()
+        func(*args, **kwargs)
+        print("--- {duration} seconds ---".format(duration=(time.time() - start_time)))
+
+    return wrapper
