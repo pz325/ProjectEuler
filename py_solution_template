@@ -2,10 +2,16 @@
 Prime pair sets
 '''
 
+ANSWER = 0
+
 def solution():
     result = 0
     return result
 
+
 if __name__ == '__main__':
+    import time
+    start_time = time.time()
     result = solution()
-    print 'Result: ', result
+    print("--- %s seconds ---" % (time.time() - start_time))
+    print("Result: %s" % result)

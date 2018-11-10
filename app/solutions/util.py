@@ -1,6 +1,7 @@
 import math
 import operator
 
+
 def reverse(n):
     return int(str(n)[::-1])
 
@@ -18,11 +19,13 @@ def primes_less_than(n):
             p.append(i)
     return p
 
+
 def n_digit_prime(n=2):
     start = int(math.pow(10, n-1))
     end = int(math.pow(10, n) - 1)
     for i in prime_start(start):
-        if i > end: break
+        if i > end:
+            break
         yield i
 
 
@@ -39,6 +42,7 @@ def prime_start(start=2):
         if is_prime(n):
             yield n
         n += 2
+
 
 def is_prime(n):
     if n <= 1:
@@ -71,10 +75,10 @@ def prime_factors(x):
     while i * i <= x:
         while x % i == 0:
             x /= i
-            factors.append(i)
+            factors.append(int(i))
         i += 2
     if x > 1:
-        factors.append(x)
+        factors.append(int(x))
     return factors
 
 
@@ -121,13 +125,13 @@ def factors(n):
     sqrt = int(math.sqrt(n))
     if sqrt * sqrt == n:
         factors.append(sqrt)
-        sqrt = sqrt -1
-    
+        sqrt = sqrt - 1
+
     for i in range(1, sqrt):
         if n % i == 0:
             factors.append(i)
             factors.append(n / i)
-    
+
     return factors
 
 
@@ -138,7 +142,8 @@ def divisors(n):
         return [1]
     factors = factorGenerator(n)
     divisors = []
-    listexponents = [map(lambda x:k**x, range(0, factors[k]+1)) for k in factors.keys()]
+    listexponents = [map(lambda x:k**x, range(0, factors[k]+1))
+                     for k in factors.keys()]
     listfactors = cartesianproduct(listexponents)
     for f in listfactors:
         divisors.append(reduce(lambda x, y: x*y, f, 1))
@@ -155,11 +160,13 @@ def digits(n):
         n /= 10
     return num, d[::-1]
 
+
 def digits_2(n):
     '''
     return number of digits of n, an integer
     '''
     return len(str(n))
+
 
 def combination(n, r):
     if r > n/2:
@@ -168,7 +175,7 @@ def combination(n, r):
     minDenominator = r+1
 
     numerator = xrange(maxNumerator+1, n+1)
-    denominator = xrange(1, minDenominator) 
+    denominator = xrange(1, minDenominator)
 
     # print(numerator)
     # print(numerator)
@@ -197,13 +204,12 @@ def array_add(a1, a2):
             carrier = 1
             addition = addition - 10
         else:
-            carrier =0 
+            carrier = 0
         return addition, carrier
-
 
     if len(a2) > len(a1):
         return array_add(a2, a1)
-    
+
     r1 = a1[::-1]
     r2 = a2[::-1]
 
@@ -214,7 +220,7 @@ def array_add(a1, a2):
         addition, carrier = get_carrier(addition)
         r1[i] = addition
         i += 1
-    
+
     while carrier > 0:
         if i < len(r1):
             addition = r1[i] + carrier
@@ -224,7 +230,6 @@ def array_add(a1, a2):
         else:
             r1.append(carrier)
             carrier = 0
-        
 
     return r1[::-1]
 
@@ -237,6 +242,7 @@ def timeit(func):
         import time
         start_time = time.time()
         func(*args, **kwargs)
-        print("--- {duration} seconds ---".format(duration=(time.time() - start_time)))
+        print(
+            "--- {duration} seconds ---".format(duration=(time.time() - start_time)))
 
     return wrapper
