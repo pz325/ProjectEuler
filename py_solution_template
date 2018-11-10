@@ -1,6 +1,7 @@
 '''
 Prime pair sets
 '''
+import util
 
 ANSWER = 0
 
