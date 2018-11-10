@@ -10,15 +10,8 @@ If rad(n) is sorted for 1 ≤ n ≤ 100000, find E(10000).
 
 '''
 import util
-from functools import reduce
 
 ANSWER = 21417
-
-
-def rad(n):
-    if n == 1:
-        return 1
-    return reduce((lambda x, y: x * y), set(util.prime_factors(n)))
 
 
 def solution():
@@ -26,7 +19,7 @@ def solution():
     target = 10000
     r = [0] * N
     for i in range(1, N):
-        r[i] = (i, rad(i))
+        r[i] = (i, util.rad(i))
     r = r[1:]
 
     r.sort(key=lambda tup: tup[1])

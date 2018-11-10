@@ -1,5 +1,6 @@
 import math
 import operator
+from functools import reduce
 
 
 def reverse(n):
@@ -266,3 +267,12 @@ def timeit(func):
             "--- {duration} seconds ---".format(duration=(time.time() - start_time)))
 
     return wrapper
+
+
+def rad(n):
+    '''
+    The radical of n, rad(n), is the product of distinct prime factors of n. For example, 504 = 2^3 × 3^2 × 7, so rad(504) = 2 × 3 × 7 = 42.
+    '''
+    if n == 1:
+        return 1
+    return reduce((lambda x, y: x * y), set(prime_factors(n)))
