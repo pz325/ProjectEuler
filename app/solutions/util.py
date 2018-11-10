@@ -3,14 +3,25 @@ import operator
 
 
 def reverse(n):
+    '''
+    reverse a number, e.g. 123 -> 321
+    '''
     return int(str(n)[::-1])
 
 
 def isPalindromic(n):
+    '''
+    Check whether a number is palindromic, e.g. 515 is palindromic
+    '''
     return str(n) == str(n)[::-1]
 
 
 def primes_less_than(n):
+    '''
+    Find all primes less than a number, n >= 2
+    '''
+    if n <= 1:
+        return []
     if n == 2:
         return [2]
     p = [2]
@@ -21,6 +32,9 @@ def primes_less_than(n):
 
 
 def n_digit_prime(n=2):
+    '''
+    Generator for primes having n digits
+    '''
     start = int(math.pow(10, n-1))
     end = int(math.pow(10, n) - 1)
     for i in prime_start(start):
@@ -30,6 +44,9 @@ def n_digit_prime(n=2):
 
 
 def prime_start(start=2):
+    '''
+    Generator for primes, starting from a number
+    '''
     if start == 2:
         yield start
         n = 3
@@ -45,6 +62,9 @@ def prime_start(start=2):
 
 
 def is_prime(n):
+    '''
+    Check wether a number is a prime
+    '''
     if n <= 1:
         return False
     if n == 2:
