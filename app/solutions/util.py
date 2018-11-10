@@ -26,7 +26,7 @@ def primes_less_than(n):
     if n == 2:
         return [2]
     p = [2]
-    for i in xrange(3, n+1, 2):
+    for i in range(3, n+1, 2):
         if is_prime(i):
             p.append(i)
     return p
@@ -195,8 +195,8 @@ def combination(n, r):
     maxNumerator = n-r
     minDenominator = r+1
 
-    numerator = xrange(maxNumerator+1, n+1)
-    denominator = xrange(1, minDenominator)
+    numerator = range(maxNumerator+1, n+1)
+    denominator = range(1, minDenominator)
 
     # print(numerator)
     # print(numerator)
